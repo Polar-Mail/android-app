@@ -21,6 +21,10 @@
         <item name="textAppearanceHeadline4">@style/TextAppearance.Headline4</item>
         <item name="textAppearanceHeadline5">@style/TextAppearance.Headline5</item>
         <item name="textAppearanceHeadline6">@style/TextAppearance.Headline6</item>
+
+        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Small</item>
+        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Medium</item>
+        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Large</item>
     </style>
 
     <style name="TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
@@ -73,6 +77,21 @@
 
     <style name="TextAppearance.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="fontFamily">@font/open_sans</item>
+    </style>
+
+    <style name="ShapeAppearance.Small" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">32dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Medium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">1dp</item>
+    </style>
+
+    <style name="ShapeAppearance.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
     </style>
 
 </resources>

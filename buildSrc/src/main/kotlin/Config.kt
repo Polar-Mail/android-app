@@ -10,4 +10,7 @@ object Config {
 object Modules {
     val core = ":library:core"
     val coreUi = ":library:core-ui"
+    val data = ":library:data"
+    val dataAndroid = ":library:data-android"
+    val domain = ":library:domain"
 }

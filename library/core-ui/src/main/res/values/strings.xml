@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Polar Mail</string>
+
+    <!-- Auth -->
+    <string name="auth_title">Welcome to Polar Mail! 🐻‍❄️</string>
+    <string name="auth_description">Choose a email provider in order to start using your email account.</string>
+
+    <!-- Main -->
+    <string name="nav_search">Search</string>
+    <string name="nav_inbox">Inbox</string>
+    <string name="nav_attachments">Attachments</string>
+    <string name="nav_profile">Profile</string>
+
 </resources>

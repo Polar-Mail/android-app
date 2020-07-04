@@ -1,3 +1,12 @@
 <resources>
 
+    <!-- Auth -->
+    <style name="Auth_Title">
+        <item name="android:textAppearance">@style/TextAppearance.Headline5</item>
+    </style>
+
+    <style name="Auth_Description">
+        <item name="android:textAppearance">@style/TextAppearance.Subtitle1</item>
+    </style>
+
 </resources>

@@ -2,6 +2,7 @@ plugins {
     id(GradlePlugins.androidLibrary)
     id(GradlePlugins.kotlinAndroid)
     id(GradlePlugins.kotlinAndroidExtensions)
+    kotlin("kapt")
 }
 
 android {
@@ -33,6 +34,13 @@ android {
 }
 
 dependencies {
+    api(project(Modules.core))
     api(Deps.appCompat)
+    api(Deps.ktx)
     api(Deps.material)
+    api(Deps.uniflow)
+    api(Deps.viewModel)
+    api(Deps.epoxy)
+    api(Deps.navigationUi)
+    api(Deps.navigationFragment)
 }

@@ -6,4 +6,5 @@ object GradlePlugins {
     val kotlinAndroidExtensions = "org.jetbrains.kotlin.android.extensions"
     val safeArgs = "androidx.navigation.safeargs.kotlin"
     val ktint = "org.jlleitschuh.gradle.ktlint"
+    val hilt = "dagger.hilt.android.plugin"
 }
