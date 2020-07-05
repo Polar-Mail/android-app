@@ -1,42 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/textTitle"
         style="@style/Auth_Title"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_horizontal"
         android:layout_marginTop="@dimen/keyline_vertical"
         android:layout_marginEnd="@dimen/keyline_horizontal"
-        android:text="@string/auth_title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="@string/auth_title" />
 
     <TextView
         android:id="@+id/textView2"
         style="@style/Auth_Description"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/auth_description"
-        app:layout_constraintEnd_toEndOf="@+id/textTitle"
-        app:layout_constraintStart_toStartOf="@+id/textTitle"
-        app:layout_constraintTop_toBottomOf="@+id/textTitle" />
+        android:layout_marginStart="@dimen/keyline_horizontal"
+        android:layout_marginEnd="@dimen/keyline_horizontal"
+        android:text="@string/auth_description" />
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         android:id="@+id/epoxyProviders"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="8dp"
+        android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -1,4 +1,4 @@
-package app.polarmail.data.providers
+package app.polarmail.domain.model
 
 data class OAuth2Info(
     val authorizationUrl: String,

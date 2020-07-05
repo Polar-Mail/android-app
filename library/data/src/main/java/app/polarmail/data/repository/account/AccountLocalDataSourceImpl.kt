@@ -4,14 +4,15 @@ import app.polarmail.core.util.AccountId
 import app.polarmail.data.entitiy.AccountEntity
 import app.polarmail.domain.model.Account
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class AccountLocalDataSourceImpl : AccountLocalDataSource {
     override fun observeAccounts(): Flow<List<Account>> {
-        TODO("Not yet implemented")
+        return flow {  }
     }
 
     override fun observeSelectedAccount(): Flow<Account> {
-        TODO("Not yet implemented")
+        return flow {  }
     }
 
     override suspend fun add(account: AccountEntity) {

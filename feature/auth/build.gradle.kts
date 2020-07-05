@@ -47,4 +47,13 @@ dependencies {
     kapt(Deps.hiltCompiler)
     implementation(Deps.hiltViewModel)
     kapt(Deps.hiltJetpackCompiler)
+    kapt(Deps.epoxyCompiler)
+
+    testImplementation(Deps.junit)
+    testImplementation(Deps.truth)
+    testImplementation(Deps.coroutinesTest)
+    testImplementation(Deps.uniflowTest)
+    testImplementation(Deps.uniflowAndroidTest)
+    testImplementation(Deps.mockk)
+    testImplementation(Deps.test)
 }

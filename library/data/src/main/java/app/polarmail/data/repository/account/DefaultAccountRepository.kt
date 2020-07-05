@@ -20,7 +20,7 @@ class DefaultAccountRepository(
     }
 
     override suspend fun getAll(): List<Account> {
-        TODO("Not yet implemented")
+        return emptyList()
     }
 
     override suspend fun getById(accountId: AccountId): Account {

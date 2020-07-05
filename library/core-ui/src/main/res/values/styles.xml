@@ -2,11 +2,14 @@
 
     <!-- Auth -->
     <style name="Auth_Title">
-        <item name="android:textAppearance">@style/TextAppearance.Headline5</item>
+        <item name="android:textAppearance">@style/TextAppearance.Headline4</item>
     </style>
 
     <style name="Auth_Description">
         <item name="android:textAppearance">@style/TextAppearance.Subtitle1</item>
+    </style>
+
+    <style name="TextAppearance.AppCompat.EmailProvider.Title" parent="TextAppearance.MaterialComponents.Body1">
     </style>
 
 </resources>

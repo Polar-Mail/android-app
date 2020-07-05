@@ -1,6 +1,4 @@
-package app.polarmail.data.providers
-
-import app.polarmail.data.providers.EmailProvider
+package app.polarmail.domain.model
 
 interface AppEmailProvider {
 
