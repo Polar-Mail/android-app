@@ -1,37 +1,42 @@
 package app.polarmail.data.repository.account
 
 import app.polarmail.core.util.AccountId
+import app.polarmail.data.dao.AccountDao
 import app.polarmail.data.entitiy.AccountEntity
+import app.polarmail.data.maper.toAccount
 import app.polarmail.domain.model.Account
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
-class AccountLocalDataSourceImpl : AccountLocalDataSource {
-    override fun observeAccounts(): Flow<List<Account>> {
-        return flow {  }
+class AccountLocalDataSourceImpl(
+    private val accountDao: AccountDao
+) : AccountLocalDataSource {
+    override fun observeAccounts(): Flow<List<AccountEntity>> {
+        return accountDao.observeAccounts()
     }
 
-    override fun observeSelectedAccount(): Flow<Account> {
-        return flow {  }
+    override fun observeSelectedAccount(): Flow<AccountEntity> {
+        return accountDao.observeSelectedAccount()
     }
 
     override suspend fun add(account: AccountEntity) {
-        TODO("Not yet implemented")
+        accountDao.insert(account)
     }
 
     override suspend fun getAll(): List<AccountEntity> {
-        TODO("Not yet implemented")
+        return accountDao.getAccounts()
     }
 
     override suspend fun getById(accountId: AccountId): AccountEntity {
-        TODO("Not yet implemented")
+        return accountDao.getAccountById(accountId.id)
     }
 
     override suspend fun remove(accountId: AccountId) {
-        TODO("Not yet implemented")
+        return accountDao.deleteAccountById(accountId.id)
     }
 
     override suspend fun update(account: AccountEntity) {
-        TODO("Not yet implemented")
+        return accountDao.update(account)
     }
 }

@@ -3,17 +3,17 @@
 
     <item
         android:id="@+id/navInbox"
-        android:icon="@drawable/ic_nav_inbox"
+        android:icon="@drawable/nav_home"
         android:title="@string/nav_inbox" />
 
     <item
         android:id="@+id/navSearch"
-        android:icon="@drawable/ic_nav_search"
+        android:icon="@drawable/nav_search"
         android:title="@string/nav_search" />
 
     <item
         android:id="@+id/navAttachments"
-        android:icon="@drawable/ic_nav_attachment"
+        android:icon="@drawable/nav_attachments"
         android:title="@string/nav_attachments" />
 
     <item

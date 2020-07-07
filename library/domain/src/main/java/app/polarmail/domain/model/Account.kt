@@ -9,5 +9,7 @@ data class Account(
     val username: String,
     val password: String,
     val host: String,
-    val port: Int
+    val port: Int,
+    val avatar: String,
+    val isSelected: Boolean
 )

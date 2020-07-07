@@ -47,4 +47,5 @@ dependencies {
     api(Deps.epoxy)
     api(Deps.navigationUi)
     api(Deps.navigationFragment)
+    implementation(Deps.appInitializer)
 }

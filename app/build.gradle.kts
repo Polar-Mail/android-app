@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id(GradlePlugins.android)
     kotlin("android")
@@ -16,6 +18,23 @@ android {
         versionCode = Config.versionCode
         versionName = Config.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["appAuthRedirectScheme"] = "app.polarmail"
+    }
+
+    signingConfigs {
+        getByName("debug") {
+            keyAlias(gradleLocalProperties(rootDir).getProperty("KEY_ALIAS"))
+            keyPassword(gradleLocalProperties(rootDir).getProperty("KEY_PASSWORD"))
+            storeFile(file("/Users/diego/AndroidStudioProjects/polarmail.keystore"))
+            storePassword(gradleLocalProperties(rootDir).getProperty("STORE_PASSWORD"))
+        }
+        create("release") {
+            keyAlias(gradleLocalProperties(rootDir).getProperty("KEY_ALIAS"))
+            keyPassword(gradleLocalProperties(rootDir).getProperty("KEY_PASSWORD"))
+            storeFile(file("/Users/diego/AndroidStudioProjects/polarmail.keystore"))
+            storePassword(gradleLocalProperties(rootDir).getProperty("STORE_PASSWORD"))
+        }
     }
 
     compileOptions {
@@ -46,6 +65,11 @@ dependencies {
     kapt(Deps.hiltCompiler)
     implementation(Deps.hiltViewModel)
     kapt(Deps.hiltJetpackCompiler)
+    implementation(Deps.roomRuntinme)
+    implementation(Deps.roomKtx)
+    kapt(Deps.roomCompiler)
+    implementation(Deps.glide)
+    kapt(Deps.glideCompiler)
 
     testImplementation(Deps.uniflowTest)
     testImplementation(Deps.uniflowAndroidTest)

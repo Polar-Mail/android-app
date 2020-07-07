@@ -16,6 +16,8 @@ android {
         targetSdkVersion(Config.targetSdk)
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         versionCode = 1
+        manifestPlaceholders["appAuthRedirectScheme"] = "app.polarmail"
+
     }
 
     buildTypes {
@@ -37,6 +39,12 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -48,6 +56,8 @@ dependencies {
     implementation(Deps.hiltViewModel)
     kapt(Deps.hiltJetpackCompiler)
     kapt(Deps.epoxyCompiler)
+    api(Deps.appAuth)
+    implementation(Deps.servicesAuth)
 
     testImplementation(Deps.junit)
     testImplementation(Deps.truth)
@@ -56,4 +66,6 @@ dependencies {
     testImplementation(Deps.uniflowAndroidTest)
     testImplementation(Deps.mockk)
     testImplementation(Deps.test)
+    testImplementation(Deps.testRunner)
+    testImplementation(Deps.robolectric)
 }

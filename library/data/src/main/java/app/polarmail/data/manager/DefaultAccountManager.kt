@@ -2,6 +2,7 @@ package app.polarmail.data.manager
 
 import app.polarmail.core.di.qualifiers.AppScope
 import app.polarmail.core.util.AccountId
+import app.polarmail.domain.interactor.AddAccountInteractor
 import app.polarmail.domain.manager.AccountManager
 import app.polarmail.domain.model.Account
 import app.polarmail.domain.model.AuthState
@@ -17,11 +18,12 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class DefaultAccountManager(
     private val accountRepository: AccountRepository,
+    private val addAccountInteractor: AddAccountInteractor,
     @AppScope appScope: CoroutineScope
 ) : AccountManager {
 
     private val _authState: ConflatedBroadcastChannel<AuthState> =
-        ConflatedBroadcastChannel(AuthState.LOGGED_OUT)
+        ConflatedBroadcastChannel()
     private val authState: Flow<AuthState> = _authState.asFlow()
 
     private val _accountSelected = ConflatedBroadcastChannel<Account>()
@@ -54,8 +56,22 @@ class DefaultAccountManager(
 
     override fun observeAccounts(): Flow<List<Account>> = accounts
 
-    override suspend fun addAccount(account: Account) {
-        accountRepository.add(account)
+    override suspend fun addAccount(
+        username: String,
+        password: String,
+        host: String,
+        port: Int,
+        picture: String
+    ) {
+        addAccountInteractor.invoke(
+            AddAccountInteractor.Params(
+                username,
+                password,
+                host,
+                port,
+                picture
+            )
+        )
     }
 
     override suspend fun removeAccount(accountId: AccountId) {

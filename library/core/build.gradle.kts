@@ -9,6 +9,7 @@ dependencies {
     api(Deps.coroutines)
     api(Deps.threeTen)
     api(Deps.hilt)
+    api(Deps.timber)
     implementation(Deps.coroutinesTest)
     implementation(Deps.truth)
 }

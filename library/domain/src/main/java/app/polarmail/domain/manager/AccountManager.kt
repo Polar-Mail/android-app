@@ -11,7 +11,14 @@ interface AccountManager {
     fun observeAccountSelected(): Flow<Account>
     fun observeAccounts(): Flow<List<Account>>
 
-    suspend fun addAccount(account: Account)
+    suspend fun addAccount(
+        username: String,
+        password: String,
+        host: String,
+        port: Int,
+        picture: String
+    )
+
     suspend fun removeAccount(accountId: AccountId)
     suspend fun selectAccount(accountId: AccountId)
 
