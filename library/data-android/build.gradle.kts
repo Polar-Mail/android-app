@@ -15,10 +15,12 @@ android {
         versionName = Config.versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        val googleKey = com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty("GOOGLE_CLIENT_ID")
+
         buildConfigField(
             "String",
             "GOOGLE_CLIENT_ID",
-            com.android.build.gradle.internal.cxx.configure.gradleLocalProperties(rootDir).getProperty("GOOGLE_CLIENT_ID")
+            "\"$googleKey\""
         )
     }
 }

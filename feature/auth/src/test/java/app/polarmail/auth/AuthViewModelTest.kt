@@ -4,6 +4,7 @@ import android.view.ViewTreeObserver
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.core.net.toUri
 import app.polarmail.core.net.TestDispatcherProvider
+import app.polarmail.domain.manager.AccountManager
 import app.polarmail.domain.model.AppEmailProvider
 import app.polarmail.domain.model.EmailProvider
 import app.polarmail.domain.model.HostInfo
@@ -39,12 +40,15 @@ class AuthViewModelTest {
 
     private lateinit var viewModel: AuthViewModel
 
+    private val oauthClient: OAuthClient = mockk(relaxed = true)
+    private val accountManager: AccountManager = mockk(relaxed = true)
+
     @Test
     fun `Test load`() = testDispatcher.runBlockingTest {
         // Given
         val providers = listOf(createMailProvider())
         every { repo.getEmailProviders() } returns providers
-        viewModel = AuthViewModel(testDispatcherProvider, repo, DefaultOAuthClient())
+        viewModel = AuthViewModel(testDispatcherProvider, repo, oauthClient, accountManager)
         view = viewModel.createTestObserver()
 
         // When

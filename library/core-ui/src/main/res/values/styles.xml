@@ -12,4 +12,9 @@
     <style name="TextAppearance.AppCompat.EmailProvider.Title" parent="TextAppearance.MaterialComponents.Body1">
     </style>
 
+    <!-- Home -->
+    <style name="AppTheme.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="itemIconSize">28dp</item>
+    </style>
+
 </resources>

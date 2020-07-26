@@ -9,6 +9,6 @@
     <string name="nav_search">Search</string>
     <string name="nav_inbox">Inbox</string>
     <string name="nav_attachments">Attachments</string>
-    <string name="nav_profile">Profile</string>
+    <string name="nav_account">Account</string>
 
 </resources>
