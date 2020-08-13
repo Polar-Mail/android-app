@@ -1,11 +1,13 @@
 package app.polarmail.auth.accountselector
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
+import app.polarmail.auth.AuthActivity
 import app.polarmail.auth.databinding.FragmentAccountSelectorBinding
 import app.polarmail.core_ui.util.DividerModel
 import app.polarmail.core_ui.util.RoundedBottomSheetDialog
@@ -52,7 +54,7 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
                         accountSelectorAdd {
                             id("account_selector_add")
                             clickListener {
-                                // TODO
+                                openAddAccount()
                             }
                         }
                     }
@@ -69,7 +71,7 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
                     }
                     is AccountSelectorItem.Settings -> {
                         dividerModel {
-                            id("divider1")
+                            id("account_selector_divider1")
                         }
                         accountSelectorSettings {
                             id("account_selector_settings")
@@ -81,6 +83,11 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
                 }
             }
         }
+    }
+
+    private fun openAddAccount() {
+        val intent = Intent(requireActivity(), AuthActivity::class.java)
+        startActivity(intent)
     }
 
 }
