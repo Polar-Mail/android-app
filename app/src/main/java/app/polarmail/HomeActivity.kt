@@ -8,11 +8,16 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import app.polarmail.auth.AuthActivity
+import app.polarmail.auth.accountselector.AccountSelectorFragment
+import app.polarmail.core_ui.extensions.hideSoftInput
+import app.polarmail.core_ui.extensions.setupWithNavController
 import app.polarmail.databinding.ActivityMainBinding
 import app.polarmail.domain.model.AuthState
 import app.polarmail.home.HomeAuthState
+import app.polarmail.home.HomeEvents
 import app.polarmail.home.HomeState
 import app.polarmail.home.HomeViewModel
 import com.bumptech.glide.Glide
@@ -20,6 +25,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import dagger.hilt.android.AndroidEntryPoint
+import io.uniflow.android.flow.onEvents
 import io.uniflow.android.flow.onStates
 
 @AndroidEntryPoint
@@ -40,6 +46,15 @@ class HomeActivity : AppCompatActivity() {
             setupBottomNavigationBar()
         }
         bindState()
+        bindEvents()
+
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { menu ->
+            if (menu.itemId == R.id.navProfile) {
+                viewModel.openAccountSelector()
+                return@setOnNavigationItemSelectedListener true
+            }
+            false
+        }
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -51,7 +66,21 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavigationBar() {
+        /*binding.bottomNavigation.setupWithNavController(
+            listOf(),
+            supportFragmentManager,
+            R.id.nav_host_container,
+            intent
+        ).observe(this) { navController ->
+            currentNavController = navController
 
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                if (destination.id != R.id.navSearch) {
+                    hideSoftInput()
+                }
+            }
+        }
+         */
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -62,6 +91,14 @@ class HomeActivity : AppCompatActivity() {
         onStates(viewModel) { state ->
             when (state) {
                 is HomeState -> handleState(state)
+            }
+        }
+    }
+
+    private fun bindEvents() {
+        onEvents(viewModel) { event ->
+            when (event.take()) {
+                is HomeEvents.OpenAccountSelector -> openAccountSelector()
             }
         }
     }
@@ -99,6 +136,10 @@ class HomeActivity : AppCompatActivity() {
         binding.bottomNavigation.menu.findItem(R.id.navProfile).run {
             icon = drawable
         }
+    }
+
+    private fun openAccountSelector() {
+        AccountSelectorFragment.show(supportFragmentManager)
     }
 
 }

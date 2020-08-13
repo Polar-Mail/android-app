@@ -45,6 +45,7 @@ dependencies {
     api(Deps.uniflow)
     api(Deps.viewModel)
     api(Deps.epoxy)
+    kapt(Deps.epoxyCompiler)
     api(Deps.navigationUi)
     api(Deps.navigationFragment)
     implementation(Deps.appInitializer)

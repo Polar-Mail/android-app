@@ -58,6 +58,8 @@ dependencies {
     kapt(Deps.epoxyCompiler)
     api(Deps.appAuth)
     implementation(Deps.servicesAuth)
+    implementation(Deps.glide)
+    kapt(Deps.glideCompiler)
 
     testImplementation(Deps.junit)
     testImplementation(Deps.truth)

@@ -76,7 +76,7 @@ class AccountSelectorViewModelTest {
         val expected = mutableListOf<AccountSelectorItem>()
         expected.run {
             add(AccountSelectorItem.AddAccount)
-            addAll(accounts.map { AccountSelectorItem.Account(it.id.id, it.username, it.avatar) })
+            addAll(accounts.map { AccountSelectorItem.Account(it.id.id, it.username, it.avatar, it.isSelected) })
             add(AccountSelectorItem.Settings)
         }
         Truth.assertThat((view.lastStateOrNull as AccountSelectorViewState).items)

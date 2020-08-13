@@ -11,4 +11,8 @@
     <string name="nav_attachments">Attachments</string>
     <string name="nav_account">Account</string>
 
+    <!-- Account selector -->
+    <string name="account_selector_add">Add account</string>
+    <string name="account_selector_settings">Settings</string>
+
 </resources>

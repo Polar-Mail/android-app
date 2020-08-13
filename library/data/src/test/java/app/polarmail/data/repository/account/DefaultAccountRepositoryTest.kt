@@ -1,6 +1,7 @@
 package app.polarmail.data.repository.account
 
 import app.polarmail.core.util.AccountId
+import app.polarmail.data.maper.toAccountEntity
 import app.polarmail.domain.model.Account
 import app.polarmail.domain.repository.AccountRepository
 import dev.olog.flow.test.observer.test
@@ -9,6 +10,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.channelFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.test.TestCoroutineScope
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.After
@@ -45,7 +47,7 @@ class DefaultAccountRepositoryTest {
 
             awaitClose()
         }
-        every { accountLocalDataSource.observeAccounts() } returns channel
+        every { accountLocalDataSource.observeAccounts() } returns channel.map { it.map { it.toAccountEntity() } }
 
         // When
         val result = accountRepository.observeAccounts()
@@ -61,6 +63,6 @@ class DefaultAccountRepositoryTest {
     }
 
     private fun createFakeAccount(id: Long): Account =
-        Account(AccountId(id), Instant.now(), "", "", "", 0)
+        Account(AccountId(id), Instant.now(), "", "", "", 0, "", true)
 
 }

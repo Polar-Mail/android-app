@@ -17,4 +17,13 @@
         <item name="itemIconSize">28dp</item>
     </style>
 
+    <!-- Account selector -->
+    <style name="TextAppearance.AppTheme.AccountSelector.Account.Title" parent="TextAppearance.Body1">
+
+    </style>
+
+    <style name="TextAppearance.AppTheme.AccountSelector.Add.Title" parent="TextAppearance.Body2">
+
+    </style>
+
 </resources>

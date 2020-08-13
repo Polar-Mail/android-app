@@ -12,8 +12,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.uniflow.android.flow.onEvents
 import io.uniflow.android.flow.onStates
 import net.openid.appauth.*
-import timber.log.Timber
-
 
 @AndroidEntryPoint
 class AuthFragment : Fragment(R.layout.fragment_auth) {

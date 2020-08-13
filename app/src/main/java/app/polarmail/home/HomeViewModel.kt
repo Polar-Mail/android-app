@@ -38,4 +38,8 @@ class HomeViewModel @ViewModelInject constructor(
         // TODO
     }
 
+    fun openAccountSelector() = action {
+        sendEvent(HomeEvents.OpenAccountSelector)
+    }
+
 }

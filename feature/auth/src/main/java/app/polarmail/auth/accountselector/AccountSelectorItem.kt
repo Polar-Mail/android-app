@@ -5,7 +5,8 @@ sealed class AccountSelectorItem {
     data class Account(
         val id: Long,
         val name: String,
-        val avatar: String
+        val avatar: String,
+        val isSelected: Boolean
     ) : AccountSelectorItem()
 
     object AddAccount : AccountSelectorItem()

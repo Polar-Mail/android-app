@@ -1,5 +1,6 @@
 package app.polarmail.auth.accountselector
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import app.polarmail.core.net.DispatcherProvider
 import app.polarmail.core_ui.mvi.ReduxViewModel
@@ -8,7 +9,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
-class AccountSelectorViewModel(
+class AccountSelectorViewModel @ViewModelInject constructor(
     private val dispatcher: DispatcherProvider,
     private val observeAccountsInteractor: ObserveAccountsInteractor
 ) : ReduxViewModel(dispatcher, AccountSelectorViewState()) {
@@ -29,7 +30,8 @@ class AccountSelectorViewModel(
                         AccountSelectorItem.Account(
                             it.id.id,
                             it.username,
-                            it.avatar
+                            it.avatar,
+                            it.isSelected
                         )
                     })
                     add(AccountSelectorItem.Settings)
