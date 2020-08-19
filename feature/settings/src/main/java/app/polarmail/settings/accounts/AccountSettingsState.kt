@@ -1,4 +1,7 @@
 package app.polarmail.settings.accounts
 
-class AccountSettingsState {
-}
+import io.uniflow.core.flow.data.UIState
+
+data class AccountSettingsState(
+    val accounts: List<AccountSettingsItem> = emptyList()
+) : UIState()

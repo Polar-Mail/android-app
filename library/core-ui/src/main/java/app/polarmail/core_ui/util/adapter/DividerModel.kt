@@ -1,4 +1,4 @@
-package app.polarmail.core_ui.util
+package app.polarmail.core_ui.util.adapter
 
 import android.content.Context
 import android.util.AttributeSet
