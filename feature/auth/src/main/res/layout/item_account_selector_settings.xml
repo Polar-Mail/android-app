@@ -7,8 +7,8 @@
     android:background="?selectableItemBackground">
 
     <ImageView
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginStart="@dimen/keyline_horizontal"
         android:layout_gravity="center_vertical"
         app:srcCompat="@drawable/ic_account_selector_settings" />

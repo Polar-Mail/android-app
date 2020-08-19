@@ -92,4 +92,21 @@ class HomeViewModelTest {
         // Then
         Truth.assertThat(view.lastStateOrNull).isEqualTo(HomeState(HomeAuthState.LoggedOut))
     }
+
+    @Test
+    fun `Test open account selector`() = testDispatcher.runBlockingTest {
+        // Given
+        val auth = flow { emit(AuthState.LOGGED_OUT) }
+        every { accountManager.observeAuthState() } returns auth
+        viewModel = HomeViewModel(testDispatcherProvider, accountManager, getAccountInteractor)
+        view = viewModel.createTestObserver()
+
+        // When
+        viewModel.openAccountSelector()
+
+        // Then
+        Truth.assertThat(view.lastEventOrNull?.peek()).isNotNull()
+        Truth.assertThat(view.lastEventOrNull?.peek()).isEqualTo(HomeEvents.OpenAccountSelector)
+    }
+
 }

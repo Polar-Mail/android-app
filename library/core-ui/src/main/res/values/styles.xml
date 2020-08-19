@@ -1,5 +1,21 @@
 <resources>
 
+    <!-- Toolbar -->
+    <style name="AppTheme.MutedToolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">?colorSurface</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <style name="AppTheme.ColoredToolbar" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+
+    </style>
+
+    <!-- Tabs -->
+    <style name="Widget.App.TabLayout" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabTextAppearance">@style/TextAppearance.Button</item>
+        <item name="tabIndicator">@drawable/tab_indicator_rounded</item>
+    </style>
+
     <!-- Auth -->
     <style name="Auth_Title">
         <item name="android:textAppearance">@style/TextAppearance.Headline4</item>
@@ -14,7 +30,7 @@
 
     <!-- Home -->
     <style name="AppTheme.BottomNav" parent="Widget.MaterialComponents.BottomNavigationView">
-        <item name="itemIconSize">28dp</item>
+        <item name="itemIconSize">26dp</item>
     </style>
 
     <!-- Account selector -->
@@ -22,7 +38,7 @@
 
     </style>
 
-    <style name="TextAppearance.AppTheme.AccountSelector.Add.Title" parent="TextAppearance.Body2">
+    <style name="TextAppearance.AppTheme.AccountSelector.Add.Title" parent="TextAppearance.Subtitle2">
 
     </style>
 

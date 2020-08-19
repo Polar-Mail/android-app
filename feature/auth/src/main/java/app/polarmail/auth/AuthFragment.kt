@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import app.polarmail.auth.databinding.FragmentAuthBinding
+import app.polarmail.core_ui.util.NavigationLink
 import dagger.hilt.android.AndroidEntryPoint
 import io.uniflow.android.flow.onEvents
 import io.uniflow.android.flow.onStates
@@ -25,6 +26,9 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
         binding = FragmentAuthBinding.bind(view)
         initRecycler()
         listenState()
+
+        val isFresh = requireNotNull(arguments).getBoolean(AuthActivity.ARG_IS_FRESH)
+        viewModel.load(if (isFresh) AuthAction.FRESH else AuthAction.ANOTHER)
     }
 
     private fun initRecycler() {
@@ -66,10 +70,13 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun handleEvents(event: AuthViewEvents) {
-        when (event) {
-            is AuthViewEvents.OAuthRequest -> sendOAuthRequest(event.request)
-            is AuthViewEvents.GoogleSignIn -> sendGoogleSignIntent(event.intent)
-        }
+        listOf(
+            when (event) {
+                is AuthViewEvents.OAuthRequest -> sendOAuthRequest(event.request)
+                is AuthViewEvents.GoogleSignIn -> sendGoogleSignIntent(event.intent)
+                is AuthViewEvents.LoggedIn -> navigateTo(event.authAction)
+            }
+        )
     }
 
     private fun sendGoogleSignIntent(intent: Intent) {
@@ -94,6 +101,17 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
                 viewModel.handleGoogleResult(data)
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
+        }
+    }
+
+    private fun navigateTo(authAction: AuthAction) {
+        if (authAction == AuthAction.FRESH) {
+            val intent = Intent(NavigationLink.HOME).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        } else {
+            (requireActivity() as? AuthActivity)?.finish()
         }
     }
 

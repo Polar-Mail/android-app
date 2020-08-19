@@ -3,15 +3,21 @@ package app.polarmail.auth.accountselector
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import app.polarmail.core.net.DispatcherProvider
+import app.polarmail.core.util.AccountId
 import app.polarmail.core_ui.mvi.ReduxViewModel
 import app.polarmail.domain.interactor.ObserveAccountsInteractor
+import app.polarmail.domain.manager.AccountManager
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class AccountSelectorViewModel @ViewModelInject constructor(
     private val dispatcher: DispatcherProvider,
-    private val observeAccountsInteractor: ObserveAccountsInteractor
+    private val observeAccountsInteractor: ObserveAccountsInteractor,
+    private val accountManager: AccountManager
 ) : ReduxViewModel(dispatcher, AccountSelectorViewState()) {
 
     init {
@@ -22,6 +28,7 @@ class AccountSelectorViewModel @ViewModelInject constructor(
         observeAccountsInteractor.invoke(Unit)
         observeAccountsInteractor.observe()
             .flowOn(dispatcher.io)
+            .catch { Timber.e(it) }
             .collect { accounts ->
                 val items = mutableListOf<AccountSelectorItem>()
                 items.run {
@@ -43,6 +50,17 @@ class AccountSelectorViewModel @ViewModelInject constructor(
                     )
                 }
             }
+    }
+
+    fun openAddAccount() = action {
+        sendEvent(AccountSelectorEvents.OpenAddAccount)
+    }
+
+    fun selectAccount(id: Long) = viewModelScope.launch(dispatcher.main) {
+        val newId = AccountId(id)
+        withContext(dispatcher.io) {
+            accountManager.selectAccount(newId)
+        }
     }
 
 }

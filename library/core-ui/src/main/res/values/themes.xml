@@ -23,60 +23,22 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Large</item>
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
     </style>
 
-    <style name="BottomSheet" parent="@style/Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_bottom_sheet_dialog_fragment</item>
+    <style name="ThemeOverlay.AppTheme.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShapeAppearanceOverlay.BottomSheet</item>
+    </style>
+    
+    <style name="ShapeAppearanceOverlay.BottomSheet" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
-    <style name="BaseBottomSheetDialog" parent="@style/Theme.MaterialComponents.Light.BottomSheetDialog">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-
-        <item name="textAppearanceBody1">@style/TextAppearance.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.Body2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.Caption</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.Overline</item>
-        <item name="textAppearanceButton">@style/TextAppearance.Button</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.Subtitle2</item>
-        <item name="textAppearanceHeadline1">@style/TextAppearance.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.Headline6</item>
-
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Small</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Medium</item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Large</item>
-    </style>
-
-    <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog"/>
-
-    <style name="DarkBottomSheetDialogTheme" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-
-        <item name="textAppearanceBody1">@style/TextAppearance.Body1</item>
-        <item name="textAppearanceBody2">@style/TextAppearance.Body2</item>
-        <item name="textAppearanceCaption">@style/TextAppearance.Caption</item>
-        <item name="textAppearanceOverline">@style/TextAppearance.Overline</item>
-        <item name="textAppearanceButton">@style/TextAppearance.Button</item>
-        <item name="textAppearanceSubtitle1">@style/TextAppearance.Subtitle1</item>
-        <item name="textAppearanceSubtitle2">@style/TextAppearance.Subtitle2</item>
-        <item name="textAppearanceHeadline1">@style/TextAppearance.Headline1</item>
-        <item name="textAppearanceHeadline2">@style/TextAppearance.Headline2</item>
-        <item name="textAppearanceHeadline3">@style/TextAppearance.Headline3</item>
-        <item name="textAppearanceHeadline4">@style/TextAppearance.Headline4</item>
-        <item name="textAppearanceHeadline5">@style/TextAppearance.Headline5</item>
-        <item name="textAppearanceHeadline6">@style/TextAppearance.Headline6</item>
-
-        <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Small</item>
-        <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Medium</item>
-        <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Large</item>
+    <style name="Widget.AppTheme.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay</item>
     </style>
 
     <style name="TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
@@ -144,6 +106,11 @@
     <style name="ShapeAppearance.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="RedButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?colorError</item>
+        <item name="android:textColor">?colorOnError</item>
     </style>
 
 </resources>

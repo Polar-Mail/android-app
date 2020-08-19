@@ -1,0 +1,12 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/settings_accounts_title">
+
+        <Preference
+            app:key="preference_accounts_handle"
+            app:icon="@drawable/ic_settings_accounts_handle"
+            app:title="@string/settings_accounts_manage" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

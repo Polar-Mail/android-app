@@ -9,20 +9,25 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import app.polarmail.auth.AuthActivity
 import app.polarmail.auth.databinding.FragmentAccountSelectorBinding
-import app.polarmail.core_ui.util.DividerModel
-import app.polarmail.core_ui.util.RoundedBottomSheetDialog
-import app.polarmail.core_ui.util.dividerModel
+import app.polarmail.core.util.AccountId
+import app.polarmail.core_ui.util.adapter.dividerModel
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import io.uniflow.android.flow.onEvents
 import io.uniflow.android.flow.onStates
 
 @AndroidEntryPoint
-class AccountSelectorFragment : RoundedBottomSheetDialog() {
+class AccountSelectorFragment : BottomSheetDialogFragment() {
 
     companion object {
-        fun show(fragmentManager: FragmentManager) {
-            AccountSelectorFragment().show(fragmentManager, null)
+        fun show(fragmentManager: FragmentManager, callback: () -> Unit) {
+            AccountSelectorFragment().apply {
+                listener = callback
+            }.show(fragmentManager, null)
         }
     }
+
+    var listener: (() -> Unit)? = null
 
     val viewModel: AccountSelectorViewModel by viewModels()
 
@@ -39,9 +44,22 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        bindState()
+        bindEvents()
+    }
+
+    private fun bindState() {
         onStates(viewModel) { state ->
             when (state) {
                 is AccountSelectorViewState -> render(state)
+            }
+        }
+    }
+
+    private fun bindEvents() {
+        onEvents(viewModel) {
+            when (val event = it.take()) {
+                is AccountSelectorEvents.OpenAddAccount -> onOpenAddAccount()
             }
         }
     }
@@ -54,7 +72,7 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
                         accountSelectorAdd {
                             id("account_selector_add")
                             clickListener {
-                                openAddAccount()
+                                viewModel.openAddAccount()
                             }
                         }
                     }
@@ -65,18 +83,18 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
                             name(item.name)
                             isAccountSelected(item.isSelected)
                             clickListener {
-                                // TODO
+                                viewModel.selectAccount(item.id)
                             }
                         }
                     }
                     is AccountSelectorItem.Settings -> {
                         dividerModel {
-                            id("account_selector_divider1")
+                            id("account-selector-divider1")
                         }
                         accountSelectorSettings {
-                            id("account_selector_settings")
+                            id("account-selector-settings")
                             clickListener {
-                                // TODO
+                                openSettings()
                             }
                         }
                     }
@@ -85,9 +103,15 @@ class AccountSelectorFragment : RoundedBottomSheetDialog() {
         }
     }
 
-    private fun openAddAccount() {
-        val intent = Intent(requireActivity(), AuthActivity::class.java)
+    private fun onOpenAddAccount() {
+        val intent = Intent(requireActivity(), AuthActivity::class.java).apply {
+            putExtra(AuthActivity.ARG_IS_FRESH, false)
+        }
         startActivity(intent)
+    }
+
+    private fun openSettings() {
+        listener?.invoke()
     }
 
 }

@@ -9,6 +9,7 @@ import app.polarmail.domain.model.AppEmailProvider
 import app.polarmail.domain.model.EmailProvider
 import app.polarmail.domain.model.HostInfo
 import app.polarmail.domain.model.OAuth2Info
+import app.polarmail.domain.repository.AccountRepository
 import app.polarmail.domain.repository.EmailProviderRepository
 import com.google.common.truth.Truth
 import io.mockk.every
@@ -52,7 +53,7 @@ class AuthViewModelTest {
         view = viewModel.createTestObserver()
 
         // When
-        // nothing
+        viewModel.load(AuthAction.FRESH)
 
         // Then
         Truth.assertThat(view.lastStateOrNull).isEqualTo(AuthViewState(providers))

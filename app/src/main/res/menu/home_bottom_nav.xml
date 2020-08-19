@@ -3,7 +3,7 @@
 
     <item
         android:id="@+id/navInbox"
-        android:icon="@drawable/ic_nav_home"
+        android:icon="@drawable/ic_nav_inbox"
         android:title="@string/nav_inbox" />
 
     <item
@@ -13,12 +13,7 @@
 
     <item
         android:id="@+id/navAttachments"
-        android:icon="@drawable/ic_nav_attachments"
+        android:icon="@drawable/ic_nav_attachment"
         android:title="@string/nav_attachments" />
-
-    <item
-        android:id="@+id/navProfile"
-        android:icon="@drawable/ic_nav_default_profile"
-        android:title="@string/nav_account" />
 
 </menu>

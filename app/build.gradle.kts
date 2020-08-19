@@ -6,6 +6,7 @@ plugins {
     kotlin("android.extensions")
     kotlin("kapt")
     id(GradlePlugins.hilt)
+    id(GradlePlugins.safeArgs)
 }
 
 android {
@@ -60,7 +61,9 @@ dependencies {
     implementation(project(Modules.coreUi))
     implementation(project(Modules.domain))
     implementation(project(Modules.dataAndroid))
-    implementation(project(Modules.auth))
+    implementation(project(Modules.featureAuth))
+    implementation(project(Modules.featureSettings))
+    implementation(project(Modules.featureMail))
     implementation(Deps.hilt)
     kapt(Deps.hiltCompiler)
     implementation(Deps.hiltViewModel)
@@ -70,6 +73,8 @@ dependencies {
     kapt(Deps.roomCompiler)
     implementation(Deps.glide)
     kapt(Deps.glideCompiler)
+    implementation(Deps.navigationFragment)
+    implementation(Deps.navigationUi)
 
     testImplementation(Deps.uniflowTest)
     testImplementation(Deps.uniflowAndroidTest)

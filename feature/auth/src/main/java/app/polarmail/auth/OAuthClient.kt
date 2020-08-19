@@ -18,6 +18,7 @@ interface OAuthClient {
 
     suspend fun buildGoogleSignIn(oAuth2Info: OAuth2Info): GoogleSignInClient
     suspend fun buildRequest(oAuth2Info: OAuth2Info): AuthorizationRequest
+    suspend fun signOut()
 
 }
 
@@ -25,13 +26,14 @@ class DefaultOAuthClient(
     private val context: Context
 ) : OAuthClient {
 
+    private val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestEmail()
+        .requestIdToken("623417360377-bk18g52llk9h8ebbojcv1i9t0ngu72nb.apps.googleusercontent.com")
+        .requestScopes(Scope(Scopes.EMAIL))
+        //.requestScopes(Scope(oAuth2Info.scopes.first { it.contains("mail") }))
+        .build()
+
     override suspend fun buildGoogleSignIn(oAuth2Info: OAuth2Info): GoogleSignInClient {
-        val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .requestIdToken("623417360377-bk18g52llk9h8ebbojcv1i9t0ngu72nb.apps.googleusercontent.com")
-            .requestScopes(Scope(Scopes.EMAIL))
-            .requestScopes(Scope(oAuth2Info.scopes.first { it.contains("mail") }))
-            .build()
         return GoogleSignIn.getClient(context, options)
     }
 
@@ -51,6 +53,10 @@ class DefaultOAuthClient(
         )
         request.setScope(oAuth2Info.scopes.joinToString(separator = " "))
         return request.build()
+    }
+
+    override suspend fun signOut() {
+        GoogleSignIn.getClient(context, options).signOut()
     }
 
 }

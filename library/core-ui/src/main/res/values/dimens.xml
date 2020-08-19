@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="keyline_vertical">24dp</dimen>
+    <dimen name="keyline_vertical_extra">36dp</dimen>
     <dimen name="keyline_horizontal">16dp</dimen>
     <dimen name="bottom_sheet_corner_radius">16dp</dimen>
     <dimen name="bottom_sheet_top_padding">8dp</dimen>

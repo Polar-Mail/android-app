@@ -13,5 +13,8 @@ object Modules {
     val data = ":library:data"
     val dataAndroid = ":library:data-android"
     val domain = ":library:domain"
-    val auth = ":feature:auth"
+
+    val featureAuth = ":feature:auth"
+    val featureSettings = ":feature:settings"
+    val featureMail = ":feature:mail"
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/navInbox"
+    app:startDestination="@id/mailListFragment">
+
+    <fragment
+        android:id="@+id/mailListFragment"
+        android:name="app.polarmail.mail.MailListFragment"
+        android:label="MailListFragment"
+        tool:layout="@layout/fragment_mail_list"/>
+
+</navigation>

@@ -1,7 +1,6 @@
 package app.polarmail.data.manager
 
 import app.polarmail.core.util.AccountId
-import app.polarmail.domain.interactor.AddAccountInteractor
 import app.polarmail.domain.manager.AccountManager
 import app.polarmail.domain.model.Account
 import app.polarmail.domain.model.AuthState
@@ -23,8 +22,6 @@ class DefaultAccountManagerTest {
 
     private val testScope = TestCoroutineScope()
 
-    private val addAccountInteractor = AddAccountInteractor(accountRepository)
-
     @Test
     fun `Given accounts is not empty when observe accounts then should emit logged in`() =
         testScope.runBlockingTest {
@@ -35,7 +32,7 @@ class DefaultAccountManagerTest {
             }
 
             every { accountRepository.observeAccounts() } returns accountsFlow
-            accountManager = DefaultAccountManager(accountRepository, addAccountInteractor, testScope)
+            accountManager = DefaultAccountManager(accountRepository, testScope)
 
             // When
             val result = accountManager.observeAuthState()
@@ -55,7 +52,7 @@ class DefaultAccountManagerTest {
             }
 
             every { accountRepository.observeAccounts() } returns accountsFlow
-            accountManager = DefaultAccountManager(accountRepository, addAccountInteractor, testScope)
+            accountManager = DefaultAccountManager(accountRepository, testScope)
 
             // When
             val result = accountManager.observeAuthState()

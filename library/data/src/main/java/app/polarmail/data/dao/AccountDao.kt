@@ -11,6 +11,9 @@ abstract class AccountDao : EntityDao<AccountEntity>() {
     @Query("SELECT * FROM accounts")
     abstract fun observeAccounts(): Flow<List<AccountEntity>>
 
+    @Query("SELECT * FROM accounts WHERE id = :id")
+    abstract fun observeAccountById(id: Long): Flow<AccountEntity>
+
     @Query("SELECT * FROM accounts WHERE is_selected = 1 LIMIT 1")
     abstract fun observeSelectedAccount(): Flow<AccountEntity>
 

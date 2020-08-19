@@ -60,6 +60,8 @@ dependencies {
     implementation(Deps.servicesAuth)
     implementation(Deps.glide)
     kapt(Deps.glideCompiler)
+    implementation(Deps.navigationUi)
+    implementation(Deps.navigationFragment)
 
     testImplementation(Deps.junit)
     testImplementation(Deps.truth)
