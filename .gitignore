@@ -127,6 +127,7 @@ output.json
 *.ipr
 *~
 *.swp
+/buildSrc/build
 
 # Android Patch
 
