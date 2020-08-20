@@ -28,21 +28,19 @@
         android:maxLines="1"
         android:textAppearance="@style/TextAppearance.AppTheme.AccountSelector.Account.Title"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageAccountSelected"
+        app:layout_constraintEnd_toStartOf="@+id/radioAccountSelected"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Diego F." />
 
-    <ImageView
-        android:id="@+id/imageAccountSelected"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
+    <RadioButton
+        android:id="@+id/radioAccountSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:gravity="end|center_vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_account_selected"
-        android:visibility="gone"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

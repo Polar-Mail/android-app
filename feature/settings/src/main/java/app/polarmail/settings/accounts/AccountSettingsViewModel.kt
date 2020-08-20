@@ -3,6 +3,7 @@ package app.polarmail.settings.accounts
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import app.polarmail.core.net.DispatcherProvider
+import app.polarmail.core.util.AccountId
 import app.polarmail.core_ui.mvi.ReduxViewModel
 import app.polarmail.domain.interactor.ObserveAccountsInteractor
 import kotlinx.coroutines.flow.catch
@@ -34,6 +35,14 @@ class AccountSettingsViewModel @ViewModelInject constructor(
                 items.add(AccountSettingsItem.AddAccount)
                 action { setState(AccountSettingsState(items)) }
             }
+    }
+
+    fun goToAccount(id: AccountId) = action {
+        sendEvent(AccountSettingsEvents.OpenAccount(id))
+    }
+
+    fun goToAddAccount() = action {
+        sendEvent(AccountSettingsEvents.OpenAddAccount)
     }
 
 }

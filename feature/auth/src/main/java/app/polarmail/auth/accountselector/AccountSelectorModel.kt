@@ -33,7 +33,10 @@ abstract class AccountSelectorModel : ViewBindingEpoxyModelWithHolder<ItemAccoun
             .into(imageAvatar)
 
         textAccountName.text = name
-        imageAccountSelected.visibility = if (isAccountSelected) View.VISIBLE else View.GONE
+        radioAccountSelected.isChecked = isAccountSelected
+        radioAccountSelected.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) clickListener.invoke()
+        }
         root.setOnClickListener { clickListener.invoke() }
     }
 
