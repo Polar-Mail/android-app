@@ -2,8 +2,8 @@ package app.polarmail.data.manager
 
 import app.polarmail.core.di.qualifiers.AppScope
 import app.polarmail.core.util.AccountId
-import app.polarmail.domain.interactor.AddAccountInteractor
 import app.polarmail.domain.manager.AccountManager
+import app.polarmail.domain.manager.AddAccountResult
 import app.polarmail.domain.model.Account
 import app.polarmail.domain.model.AuthState
 import app.polarmail.domain.repository.AccountRepository
@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class DefaultAccountManager(
     private val accountRepository: AccountRepository,
-    private val addAccountInteractor: AddAccountInteractor,
     @AppScope appScope: CoroutineScope
 ) : AccountManager {
 
@@ -35,17 +34,23 @@ class DefaultAccountManager(
     init {
         appScope.launch {
             accountRepository.observeAccounts().collect {
-                _accounts.send(it)
+                try {
+                    _accounts.send(it)
 
-                val authState = if (it.isNotEmpty()) {
-                    AuthState.LOGGED_IN
-                } else {
-                    AuthState.LOGGED_OUT
+                    val authState = if (it.isNotEmpty()) {
+                        AuthState.LOGGED_IN
+                    } else {
+                        AuthState.LOGGED_OUT
+                    }
+                    _authState.send(authState)
+                } catch (exception: Exception) {
+                    // Channel has been closed
                 }
-                _authState.send(authState)
             }
             accountRepository.observeSelectedAccount().collect {
-                _accountSelected.send(it)
+                it?.let {
+                    _accountSelected.send(it)
+                }
             }
         }
     }
@@ -62,16 +67,19 @@ class DefaultAccountManager(
         host: String,
         port: Int,
         picture: String
-    ) {
-        addAccountInteractor.invoke(
-            AddAccountInteractor.Params(
+    ): AddAccountResult {
+        return try {
+            val id = accountRepository.add(
                 username,
                 password,
                 host,
                 port,
                 picture
             )
-        )
+            AddAccountResult.Success(AccountId(id))
+        } catch (e: Exception) {
+            AddAccountResult.Failure
+        }
     }
 
     override suspend fun removeAccount(accountId: AccountId) {
@@ -79,7 +87,20 @@ class DefaultAccountManager(
     }
 
     override suspend fun selectAccount(accountId: AccountId) {
-        // TODO
+        val accounts = accountRepository.getAll()
+
+        // Set all accounts to not selected expect the wanted one
+        accounts
+            .map { it.copy(isSelected = false) }
+            .forEach {
+                accountRepository.update(it)
+            }
+
+        accounts.filter { it.id == accountId }
+            .map { it.copy(isSelected = true) }
+            .forEach {
+                accountRepository.update(it)
+            }
     }
 
 }

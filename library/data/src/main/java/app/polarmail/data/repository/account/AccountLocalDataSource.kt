@@ -8,9 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface AccountLocalDataSource {
 
     fun observeAccounts(): Flow<List<AccountEntity>>
-    fun observeSelectedAccount(): Flow<AccountEntity>
+    fun observeAccount(id: Long): Flow<AccountEntity?>
+    fun observeSelectedAccount(): Flow<AccountEntity?>
 
-    suspend fun add(account: AccountEntity)
+    suspend fun add(account: AccountEntity): Long
     suspend fun getAll(): List<AccountEntity>
     suspend fun getById(accountId: AccountId): AccountEntity
     suspend fun remove(accountId: AccountId)

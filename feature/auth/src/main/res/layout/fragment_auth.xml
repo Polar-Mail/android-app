@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/keyline_horizontal"
-        android:layout_marginTop="@dimen/keyline_vertical"
+        android:layout_marginTop="@dimen/keyline_vertical_extra"
         android:layout_marginEnd="@dimen/keyline_horizontal"
         android:text="@string/auth_title" />
 
@@ -30,7 +30,7 @@
         android:id="@+id/epoxyProviders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="8dp"
+        android:paddingTop="@dimen/keyline_vertical"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

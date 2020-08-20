@@ -10,9 +10,7 @@ import app.polarmail.data.repository.account.AccountLocalDataSource
 import app.polarmail.data.repository.account.AccountLocalDataSourceImpl
 import app.polarmail.data.repository.account.DefaultAccountRepository
 import app.polarmail.data_android.emailproviders.EmailProviderRepositoryImpl
-import app.polarmail.domain.interactor.AddAccountInteractor
 import app.polarmail.domain.manager.AccountManager
-import app.polarmail.domain.model.EmailProvider
 import app.polarmail.domain.repository.AccountRepository
 import app.polarmail.domain.repository.EmailProviderRepository
 import dagger.Module
@@ -41,10 +39,9 @@ class AccountModule {
     @Singleton
     fun provideAccountManager(
         accountRepository: AccountRepository,
-        addAccountInteractor: AddAccountInteractor,
         @AppScope appScope: CoroutineScope
     ): AccountManager =
-        DefaultAccountManager(accountRepository, addAccountInteractor, appScope)
+        DefaultAccountManager(accountRepository, appScope)
 
     @Provides
     @Singleton

@@ -23,6 +23,22 @@
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.Small</item>
         <item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.Medium</item>
         <item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.Large</item>
+        <item name="tabStyle">@style/Widget.App.TabLayout</item>
+    </style>
+
+    <style name="ThemeOverlay.AppTheme.BottomSheetDialog" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ShapeAppearanceOverlay.BottomSheet</item>
+    </style>
+    
+    <style name="ShapeAppearanceOverlay.BottomSheet" parent="">
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="Widget.AppTheme.BottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay</item>
     </style>
 
     <style name="TextAppearance.Headline1" parent="TextAppearance.MaterialComponents.Headline1">
@@ -57,11 +73,11 @@
         <item name="fontFamily">@font/open_sans_semibold</item>
     </style>
 
-    <style name="TextAppearance.Body1" parent="TextAppearance.AppCompat.Body1">
+    <style name="TextAppearance.Body1" parent="TextAppearance.MaterialComponents.Body1">
         <item name="fontFamily">@font/open_sans</item>
     </style>
 
-    <style name="TextAppearance.Body2" parent="TextAppearance.AppCompat.Body2">
+    <style name="TextAppearance.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/open_sans</item>
     </style>
 
@@ -90,6 +106,11 @@
     <style name="ShapeAppearance.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="RedButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">?colorError</item>
+        <item name="android:textColor">?colorOnError</item>
     </style>
 
 </resources>

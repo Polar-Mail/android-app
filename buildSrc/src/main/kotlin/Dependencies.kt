@@ -1,5 +1,5 @@
 object Versions {
-    val kotlin = "1.3.71"
+    val kotlin = "1.4.0"
     val coroutines = "1.3.3"
 
     val ktx = "1.2.0"
@@ -26,6 +26,7 @@ object Versions {
     val servicesAuth = "18.0.0"
     val glide = "4.11.0"
 
+    val preferences = "1.1.1"
     val flowPreferences = "1.1.1"
     val kaspresso = "1.1.0"
     val jakarta = "1.6.5"
@@ -64,6 +65,7 @@ object Deps {
     val servicesAuth = "com.google.android.gms:play-services-auth:${Versions.servicesAuth}"
     val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    val preferences = "androidx.preference:preference-ktx:${Versions.preferences}"
 
     val junit = "junit:junit:4.13"
     val uniflowTest = "io.uniflow:uniflow-test:${Versions.uniflow}"

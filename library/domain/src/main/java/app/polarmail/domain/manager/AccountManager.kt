@@ -17,7 +17,7 @@ interface AccountManager {
         host: String,
         port: Int,
         picture: String
-    )
+    ): AddAccountResult
 
     suspend fun removeAccount(accountId: AccountId)
     suspend fun selectAccount(accountId: AccountId)

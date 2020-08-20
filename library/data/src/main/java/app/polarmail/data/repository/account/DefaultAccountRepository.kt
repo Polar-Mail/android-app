@@ -17,8 +17,12 @@ class DefaultAccountRepository(
     override fun observeAccounts(): Flow<List<Account>> =
         accountLocalDataSource.observeAccounts().map { it.map { it.toAccount() } }
 
-    override fun observeSelectedAccount(): Flow<Account> =
-        accountLocalDataSource.observeSelectedAccount().map { it.toAccount() }
+    override fun observeSelectedAccount(): Flow<Account?> =
+        accountLocalDataSource.observeSelectedAccount().map { it?.toAccount() }
+
+    override fun observeAccount(id: Long): Flow<Account?> {
+        return accountLocalDataSource.observeAccount(id).map { it?.toAccount() }
+    }
 
     override suspend fun add(
         username: String,
@@ -26,8 +30,8 @@ class DefaultAccountRepository(
         host: String,
         port: Int,
         picture: String
-    ) {
-        accountLocalDataSource.add(
+    ): Long {
+        return accountLocalDataSource.add(
             AccountEntity(
                 0L,
                 Instant.now(),
@@ -36,7 +40,7 @@ class DefaultAccountRepository(
                 host,
                 port,
                 picture,
-                true // Automatically selects the new account when gets added
+                false
             )
         )
     }

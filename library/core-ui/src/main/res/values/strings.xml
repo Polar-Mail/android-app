@@ -9,6 +9,19 @@
     <string name="nav_search">Search</string>
     <string name="nav_inbox">Inbox</string>
     <string name="nav_attachments">Attachments</string>
-    <string name="nav_profile">Profile</string>
+    <string name="nav_account">Account</string>
+
+    <!-- Account selector -->
+    <string name="account_selector_add">Add account</string>
+    <string name="account_selector_settings">Settings</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <string name="settings_accounts_title">Accounts</string>
+    <string name="settings_accounts_manage">Manage accounts</string>
+    <string name="settings_account_add_account">Add account</string>
+    <string name="settings_account_remove_account">Remove account</string>
 
 </resources>

@@ -16,12 +16,16 @@ class AccountLocalDataSourceImpl(
         return accountDao.observeAccounts()
     }
 
+    override fun observeAccount(id: Long): Flow<AccountEntity> {
+        return accountDao.observeAccountById(id)
+    }
+
     override fun observeSelectedAccount(): Flow<AccountEntity> {
         return accountDao.observeSelectedAccount()
     }
 
-    override suspend fun add(account: AccountEntity) {
-        accountDao.insert(account)
+    override suspend fun add(account: AccountEntity): Long {
+        return accountDao.insert(account)
     }
 
     override suspend fun getAll(): List<AccountEntity> {

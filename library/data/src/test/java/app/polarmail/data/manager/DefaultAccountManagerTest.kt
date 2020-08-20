@@ -64,6 +64,6 @@ class DefaultAccountManagerTest {
         }
 
     private fun createFakeAccount(id: Long): Account =
-        Account(AccountId(id), Instant.now(), "", "", "", 0)
+        Account(AccountId(id), Instant.now(), "", "", "", 0, "", true)
 
 }

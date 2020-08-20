@@ -10,5 +10,7 @@ sealed class AuthViewEvents : UIEvent() {
 
     data class GoogleSignIn(val intent: Intent) : AuthViewEvents()
 
+    data class LoggedIn(val authAction: AuthAction) : AuthViewEvents()
+
 }
 

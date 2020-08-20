@@ -7,9 +7,10 @@ import kotlinx.coroutines.flow.Flow
 interface AccountRepository {
 
     fun observeAccounts(): Flow<List<Account>>
-    fun observeSelectedAccount(): Flow<Account>
+    fun observeAccount(id: Long): Flow<Account?>
+    fun observeSelectedAccount(): Flow<Account?>
 
-    suspend fun add(username: String, password: String, host: String, port: Int, picture: String)
+    suspend fun add(username: String, password: String, host: String, port: Int, picture: String): Long
     suspend fun getAll(): List<Account>
     suspend fun getById(accountId: AccountId): Account
     suspend fun remove(accountId: AccountId)

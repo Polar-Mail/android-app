@@ -1,22 +1,26 @@
 package app.polarmail.auth
 
 import android.content.Intent
+import android.database.sqlite.SQLiteConstraintException
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.viewModelScope
 import app.polarmail.core.net.DispatcherProvider
 import app.polarmail.core_ui.mvi.ReduxViewModel
 import app.polarmail.domain.manager.AccountManager
+import app.polarmail.domain.manager.AddAccountResult
 import app.polarmail.domain.model.AppEmailProvider
+import app.polarmail.domain.model.AuthState
 import app.polarmail.domain.repository.EmailProviderRepository
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.common.api.ApiException
+import io.uniflow.core.flow.actionOn
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import net.openid.appauth.AuthState
+import net.openid.appauth.AuthState as OAuthState
 import timber.log.Timber
-import java.lang.IllegalStateException
-
 
 class AuthViewModel @ViewModelInject constructor(
     private val dispatcher: DispatcherProvider,
@@ -27,13 +31,9 @@ class AuthViewModel @ViewModelInject constructor(
 
     private var currentProvider: AppEmailProvider? = null
 
-    init {
-        load()
-    }
-
-    fun load() = action {
+    fun load(authAction: AuthAction) = action {
         val emailProviders = emailProviderRepository.getEmailProviders()
-        setState(AuthViewState(emailProviders))
+        setState(AuthViewState(emailProviders, authAction))
     }
 
     fun authorize(provider: AppEmailProvider) = viewModelScope.launch(dispatcher.main) {
@@ -57,7 +57,7 @@ class AuthViewModel @ViewModelInject constructor(
         }
     }
 
-    fun handleAuthResponse(authState: AuthState) {
+    fun handleAuthResponse(authState: OAuthState) {
         if (authState.isAuthorized && authState.accessToken != null) {
             val token = authState.accessToken
 
@@ -82,6 +82,8 @@ class AuthViewModel @ViewModelInject constructor(
         } catch (e: ApiException) {
             Timber.e(e)
             // TODO
+        } finally {
+            oAuthClient.signOut()
         }
     }
 
@@ -98,16 +100,23 @@ class AuthViewModel @ViewModelInject constructor(
             requireNotNull(currentProvider)
 
             withContext(dispatcher.io) {
-                accountManager.addAccount(
+                val result = accountManager.addAccount(
                     account.email!!,
                     account.idToken!!,
                     currentProvider!!.emailProvider.imap.host,
                     currentProvider!!.emailProvider.imap.port,
                     account.photoUrl.toString()
                 )
-            }
 
-            currentProvider = null
+                when (result) {
+                    is AddAccountResult.Success -> accountManager.selectAccount(result.id)
+                }
+
+                currentProvider = null
+                actionOn<AuthViewState> { state ->
+                    sendEvent(AuthViewEvents.LoggedIn(state.type))
+                }
+            }
         }
 
 }
