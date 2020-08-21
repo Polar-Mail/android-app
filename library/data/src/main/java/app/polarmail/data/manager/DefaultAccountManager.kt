@@ -4,6 +4,7 @@ import app.polarmail.core.di.qualifiers.AppScope
 import app.polarmail.core.util.AccountId
 import app.polarmail.domain.manager.AccountManager
 import app.polarmail.domain.manager.AddAccountResult
+import app.polarmail.domain.manager.SyncManager
 import app.polarmail.domain.model.Account
 import app.polarmail.domain.model.AuthState
 import app.polarmail.domain.repository.AccountRepository
@@ -18,6 +19,7 @@ import kotlinx.coroutines.launch
 @ExperimentalCoroutinesApi
 class DefaultAccountManager(
     private val accountRepository: AccountRepository,
+    private val syncManager: SyncManager,
     @AppScope appScope: CoroutineScope
 ) : AccountManager {
 
@@ -43,6 +45,11 @@ class DefaultAccountManager(
                         AuthState.LOGGED_OUT
                     }
                     _authState.send(authState)
+
+                    it.forEach {
+                        syncManager.scheduleSync(it.id)
+                    }
+
                 } catch (exception: Exception) {
                     // Channel has been closed
                 }

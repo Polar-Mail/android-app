@@ -5,18 +5,18 @@ import androidx.lifecycle.viewModelScope
 import app.polarmail.core.net.DispatcherProvider
 import app.polarmail.core_ui.mvi.ReduxViewModel
 import app.polarmail.domain.interactor.GetAccountsInteractor
+import app.polarmail.domain.interactor.ObserveFoldersInteractor
 import app.polarmail.domain.manager.AccountManager
 import app.polarmail.domain.model.AuthState
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import io.uniflow.core.flow.actionOn
+import kotlinx.coroutines.flow.*
 import timber.log.Timber
 
 class HomeViewModel @ViewModelInject constructor(
     dispatcher: DispatcherProvider,
     accountManager: AccountManager,
-    getAccountsInteractor: GetAccountsInteractor
+    getAccountsInteractor: GetAccountsInteractor,
+    observeFoldersInteractor: ObserveFoldersInteractor
 ) : ReduxViewModel(dispatcher) {
 
     init {
@@ -33,6 +33,22 @@ class HomeViewModel @ViewModelInject constructor(
                 action {
                     setState(HomeState(authState))
                 }
+            }
+            .launchIn(viewModelScope)
+
+        accountManager.observeAccountSelected()
+            .flowOn(dispatcher.io)
+            .onEach { account ->
+                observeFoldersInteractor.invoke(ObserveFoldersInteractor.Params(account.id))
+                observeFoldersInteractor.observe()
+                    .flowOn(dispatcher.io)
+                    .collect { folders ->
+                        actionOn<HomeState> { state ->
+                            (state.authState as? HomeAuthState.LoggedIn)?.copy(folders = folders)?.let {
+                                setState(HomeState(it))
+                            }
+                        }
+                    }
             }
             .launchIn(viewModelScope)
     }

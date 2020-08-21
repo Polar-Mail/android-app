@@ -21,7 +21,7 @@ abstract class AccountDao : EntityDao<AccountEntity>() {
     abstract suspend fun getAccounts(): List<AccountEntity>
 
     @Query("SELECT * FROM accounts WHERE id = :id")
-    abstract suspend fun getAccountById(id: Long): AccountEntity
+    abstract suspend fun getAccountById(id: Long): AccountEntity?
 
     @Query("DELETE FROM accounts WHERE id = :id")
     abstract suspend fun deleteAccountById(id: Long)

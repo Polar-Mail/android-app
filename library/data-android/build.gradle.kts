@@ -23,6 +23,15 @@ android {
             "\"$googleKey\""
         )
     }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    (this as ExtensionAware).configure<org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions> {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
@@ -31,4 +40,14 @@ dependencies {
     implementation(Deps.roomRuntinme)
     implementation(Deps.roomKtx)
     kapt(Deps.roomCompiler)
+    implementation(Deps.hilt)
+    implementation(Deps.hiltWorker)
+    implementation(Deps.workManager)
+    kapt(Deps.hiltCompiler)
+
+    androidTestImplementation(Deps.test)
+    androidTestImplementation(Deps.coroutinesTest)
+    androidTestImplementation(Deps.testRunner)
+    androidTestImplementation(Deps.testCore)
+    androidTestImplementation(Deps.truth)
 }

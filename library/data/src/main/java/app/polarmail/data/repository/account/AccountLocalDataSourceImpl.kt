@@ -32,7 +32,7 @@ class AccountLocalDataSourceImpl(
         return accountDao.getAccounts()
     }
 
-    override suspend fun getById(accountId: AccountId): AccountEntity {
+    override suspend fun getById(accountId: AccountId): AccountEntity? {
         return accountDao.getAccountById(accountId.id)
     }
 

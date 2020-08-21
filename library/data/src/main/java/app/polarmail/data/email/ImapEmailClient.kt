@@ -3,6 +3,7 @@ package app.polarmail.data.email
 import com.sun.mail.imap.IMAPStore
 import java.util.Properties
 import javax.mail.Authenticator
+import javax.mail.Folder
 import javax.mail.PasswordAuthentication
 import javax.mail.Session
 
@@ -77,6 +78,10 @@ internal class ImapEmailClient(
         store?.close()
         store = null
         session = null
+    }
+
+    override fun getFolders(): List<Folder> {
+        return store?.defaultFolder?.list()?.toList() ?: emptyList()
     }
 
 }

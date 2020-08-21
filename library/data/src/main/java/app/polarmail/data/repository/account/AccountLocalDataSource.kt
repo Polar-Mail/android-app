@@ -13,7 +13,7 @@ interface AccountLocalDataSource {
 
     suspend fun add(account: AccountEntity): Long
     suspend fun getAll(): List<AccountEntity>
-    suspend fun getById(accountId: AccountId): AccountEntity
+    suspend fun getById(accountId: AccountId): AccountEntity?
     suspend fun remove(accountId: AccountId)
     suspend fun update(account: AccountEntity)
 

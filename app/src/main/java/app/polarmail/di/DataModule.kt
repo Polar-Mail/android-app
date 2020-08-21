@@ -3,6 +3,7 @@ package app.polarmail.di
 import android.content.Context
 import androidx.room.Room
 import app.polarmail.data.dao.AccountDao
+import app.polarmail.data.dao.FolderDao
 import app.polarmail.data_android.database.PolarMailDatabase
 import dagger.Module
 import dagger.Provides
@@ -27,5 +28,9 @@ class DataModule {
     @Provides
     @Singleton
     fun provideAccountDao(database: PolarMailDatabase): AccountDao = database.getAccountDao()
+
+    @Provides
+    @Singleton
+    fun provideFolderDao(database: PolarMailDatabase): FolderDao = database.getFolderDao()
 
 }

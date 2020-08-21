@@ -1,5 +1,7 @@
 package app.polarmail.data.email
 
+import javax.mail.Folder
+
 
 class Pop3EmailClient(private val isDebug: Boolean) : EmailClient {
 
@@ -12,6 +14,10 @@ class Pop3EmailClient(private val isDebug: Boolean) : EmailClient {
     }
 
     override fun disconnect() {
+        TODO("Not yet implemented")
+    }
+
+    override fun getFolders(): List<Folder> {
         TODO("Not yet implemented")
     }
 

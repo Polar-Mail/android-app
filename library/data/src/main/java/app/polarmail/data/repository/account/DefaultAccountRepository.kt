@@ -49,8 +49,8 @@ class DefaultAccountRepository(
         return accountLocalDataSource.getAll().map { it.toAccount() }
     }
 
-    override suspend fun getById(accountId: AccountId): Account {
-        return accountLocalDataSource.getById(accountId).toAccount()
+    override suspend fun getById(accountId: AccountId): Account? {
+        return accountLocalDataSource.getById(accountId)?.toAccount()
     }
 
     override suspend fun remove(accountId: AccountId) {

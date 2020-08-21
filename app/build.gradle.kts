@@ -75,6 +75,8 @@ dependencies {
     kapt(Deps.glideCompiler)
     implementation(Deps.navigationFragment)
     implementation(Deps.navigationUi)
+    implementation(Deps.hiltWorker)
+    implementation("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava")
 
     testImplementation(Deps.uniflowTest)
     testImplementation(Deps.uniflowAndroidTest)

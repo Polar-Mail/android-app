@@ -12,7 +12,7 @@ interface AccountRepository {
 
     suspend fun add(username: String, password: String, host: String, port: Int, picture: String): Long
     suspend fun getAll(): List<Account>
-    suspend fun getById(accountId: AccountId): Account
+    suspend fun getById(accountId: AccountId): Account?
     suspend fun remove(accountId: AccountId)
     suspend fun update(account: Account)
 

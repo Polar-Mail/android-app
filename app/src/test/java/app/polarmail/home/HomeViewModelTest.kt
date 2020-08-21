@@ -3,11 +3,16 @@ package app.polarmail.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import app.polarmail.core.net.TestDispatcherProvider
 import app.polarmail.core.util.AccountId
+import app.polarmail.core.util.FolderId
 import app.polarmail.domain.interactor.GetAccountsInteractor
+import app.polarmail.domain.interactor.ObserveFoldersInteractor
 import app.polarmail.domain.manager.AccountManager
 import app.polarmail.domain.model.Account
 import app.polarmail.domain.model.AuthState
+import app.polarmail.domain.model.Folder
+import app.polarmail.domain.model.FolderType
 import app.polarmail.domain.repository.AccountRepository
+import app.polarmail.domain.repository.FolderRepository
 import com.google.common.truth.Truth
 import io.mockk.coEvery
 import io.mockk.every
@@ -33,12 +38,14 @@ class HomeViewModelTest {
     val testDispatchersRule = TestDispatchersRule()
 
     private val accountRepository: AccountRepository = mockk(relaxed = true)
+    private val folderRepo: FolderRepository = mockk(relaxed = true)
 
     private val testDispatcher = testDispatchersRule.testCoroutineDispatcher
     private val testDispatcherProvider = TestDispatcherProvider(testDispatcher)
 
     private val accountManager: AccountManager = mockk(relaxed = true)
     private val getAccountInteractor = GetAccountsInteractor(accountRepository)
+    private val observeFoldersInteractor = ObserveFoldersInteractor(folderRepo)
 
     private lateinit var view: TestViewObserver
 
@@ -61,7 +68,12 @@ class HomeViewModelTest {
         val auth = flow { emit(AuthState.LOGGED_IN) }
         every { accountManager.observeAuthState() } returns auth
         coEvery { accountRepository.getAll() } returns accounts
-        viewModel = HomeViewModel(testDispatcherProvider, accountManager, getAccountInteractor)
+        viewModel = HomeViewModel(
+            testDispatcherProvider,
+            accountManager,
+            getAccountInteractor,
+            observeFoldersInteractor
+        )
         view = viewModel.createTestObserver()
 
         // When
@@ -72,7 +84,8 @@ class HomeViewModelTest {
             HomeState(
                 HomeAuthState.LoggedIn(
                     accounts.first(),
-                    accounts
+                    accounts,
+                    emptyList()
                 )
             )
         )
@@ -83,7 +96,12 @@ class HomeViewModelTest {
         // Given
         val auth = flow { emit(AuthState.LOGGED_OUT) }
         every { accountManager.observeAuthState() } returns auth
-        viewModel = HomeViewModel(testDispatcherProvider, accountManager, getAccountInteractor)
+        viewModel = HomeViewModel(
+            testDispatcherProvider,
+            accountManager,
+            getAccountInteractor,
+            observeFoldersInteractor
+        )
         view = viewModel.createTestObserver()
 
         // When
@@ -98,7 +116,12 @@ class HomeViewModelTest {
         // Given
         val auth = flow { emit(AuthState.LOGGED_OUT) }
         every { accountManager.observeAuthState() } returns auth
-        viewModel = HomeViewModel(testDispatcherProvider, accountManager, getAccountInteractor)
+        viewModel = HomeViewModel(
+            testDispatcherProvider,
+            accountManager,
+            getAccountInteractor,
+            observeFoldersInteractor
+        )
         view = viewModel.createTestObserver()
 
         // When
@@ -107,6 +130,62 @@ class HomeViewModelTest {
         // Then
         Truth.assertThat(view.lastEventOrNull?.peek()).isNotNull()
         Truth.assertThat(view.lastEventOrNull?.peek()).isEqualTo(HomeEvents.OpenAccountSelector)
+    }
+
+    @Test
+    fun `Test load folders`() = testDispatcher.runBlockingTest {
+        // Given
+        val accounts = listOf(
+            Account(
+                AccountId(1L),
+                Instant.now(),
+                "whatever",
+                "pass",
+                "",
+                9000,
+                "avatar",
+                true
+            )
+        )
+        val folders = listOf(
+            Folder(
+                FolderId(1L),
+                "Inbox",
+                1L,
+                FolderType.INBOX,
+                1,
+                Instant.now(),
+                1
+            )
+        )
+
+        val auth = flow { emit(AuthState.LOGGED_IN) }
+        val accountSelected = flow { emit(accounts.first()) }
+
+        every { accountManager.observeAuthState() } returns auth
+        every { accountManager.observeAccountSelected() } returns accountSelected
+        coEvery { accountRepository.getAll() } returns accounts
+        every { folderRepo.observeFolders(AccountId(1L)) } returns flow { emit(folders) }
+        viewModel = HomeViewModel(
+            testDispatcherProvider,
+            accountManager,
+            getAccountInteractor,
+            observeFoldersInteractor
+        )
+        view = viewModel.createTestObserver()
+
+        // When
+
+        // Then
+        Truth.assertThat(view.lastStateOrNull).isEqualTo(
+            HomeState(
+                HomeAuthState.LoggedIn(
+                    accounts.first(),
+                    accounts,
+                    folders
+                )
+            )
+        )
     }
 
 }
